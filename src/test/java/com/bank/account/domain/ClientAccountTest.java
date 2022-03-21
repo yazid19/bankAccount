@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ClientAccountTest {
-	static final MathContext mc = new MathContext(2);
+	static final MathContext mc = new MathContext(4);
 
 	ClientAccount account;
 
@@ -25,21 +25,21 @@ public class ClientAccountTest {
 
 	@Test
 	public void when_deposit_expected_add_into_balance() {
-		account.deposit(BigDecimal.valueOf(36), mc);
-		assertEquals(BigDecimal.valueOf(36), account.getCurrentBalance());
+		account.deposit(BigDecimal.valueOf(36.3666), mc);
+		assertEquals(BigDecimal.valueOf(36.37), account.getCurrentBalance());
 		assertEquals(account.getHitories().size(), 1);
 		assertEquals(account.getHitories().get(0).operation(), OperationEnum.DEPOSIT);
-		assertEquals(account.getHitories().get(0).newBalance(), BigDecimal.valueOf(36));
+		assertEquals(account.getHitories().get(0).newBalance(), BigDecimal.valueOf(36.37));
 	}
 
 	@Test
 	public void when_retrieve_expected_remove_from_balance() {
-		account.deposit(BigDecimal.valueOf(36), mc);
-		account.retrieve(BigDecimal.valueOf(15), mc);
-		assertEquals(BigDecimal.valueOf(21), account.getCurrentBalance());
+		account.deposit(BigDecimal.valueOf(36.55), mc);
+		account.retrieve(BigDecimal.valueOf(15.66), mc);
+		assertEquals(BigDecimal.valueOf(20.89), account.getCurrentBalance());
 		assertEquals(account.getHitories().size(), 2);
 		assertEquals(account.getHitories().get(1).operation(), OperationEnum.RETRIEVE);
-		assertEquals(account.getHitories().get(1).newBalance(), BigDecimal.valueOf(21));
+		assertEquals(account.getHitories().get(1).newBalance(), BigDecimal.valueOf(20.89));
 	}
 
 	@Test
